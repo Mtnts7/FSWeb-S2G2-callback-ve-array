@@ -1,5 +1,4 @@
-const { fifaData } = require('./fifa.js')
-
+const { fifaData } = require("./fifa.js");
 
 /* Görev 1: 
 	Verilen datayı parçalayarak aşağıdaki verileri (console.log-ing) elde ederek pratik yapın. 
@@ -7,11 +6,11 @@ const { fifaData } = require('./fifa.js')
 	💡 İPUCU: Öncelikle datayı filtrelemek isteyebilirsiniz */
 
 //(a) 2014 Dünya kupası Finali Evsahibi takım ismi (dizide "Home Team Name" anahtarı)
-const fifa2014 = fifaData.filter((match)=>{
-	return match.Year===2014 && match.Stage==="Final"
+const fifa2014 = fifaData.filter((match) => {
+  return match.Year === 2014 && match.Stage === "Final";
 });
 
-// console.log(fifa2014[0]['Home Team Name']);
+// console.log(fifa2014[0]["Home Team Name"]);
 //(b) 2014 Dünya kupası Finali Deplasman takım ismi  (dizide "Away Team Name" anahtarı)
 //console.log(final2014[0]['Away Team Name']);
 //(c) 2014 Dünya kupası finali Ev sahibi takım golleri (dizide "Home Team Goals" anahtarı)
@@ -19,13 +18,12 @@ const fifa2014 = fifaData.filter((match)=>{
 //(d)2014 Dünya kupası finali Deplasman takım golleri  (dizide "Away Team Goals" anahtarı)
 //console.log(final2014[0]['Away Team Goals']);
 //(e) 2014 Dünya kupası finali kazananı*/
-let winner = fifa2014[0]['Home Team Goals'];
-if(winner>fifa2014[0]['Away Team Goals']){
-	// console.log(fifa2014[0]['Home Team Name'])
-}else{
-	// console.log(fifa2014[0]['Away Team Name'])
-};
-
+let winner = fifa2014[0]["Home Team Goals"];
+if (winner > fifa2014[0]["Away Team Goals"]) {
+  // console.log(fifa2014[0]['Home Team Name'])
+} else {
+  // console.log(fifa2014[0]['Away Team Name'])
+}
 
 /*  Görev 2: 
 	Finaller adlı fonksiyonu kullanarak aşağıdakileri uygulayın:
@@ -35,16 +33,12 @@ if(winner>fifa2014[0]['Away Team Goals']){
 	💡 İPUCU - verilen data içindeki nesnelerin(objects) "Stage" anahtarına bakmalısınız
 */
 
- function Finaller(dizi) {
-	return dizi.filter((match)=>{return match.Stage == "Final"});
-	
- 	}
-
-	
-
-
-
-
+function Finaller(dizi) {
+  return dizi.filter((match) => {
+    return match.Stage == "Final";
+  });
+}
+// console.log(Finaller(fifaData));
 /*  Görev 3: 
 	Bir higher-order fonksiyonu olan Yillar isimli fonksiyona aşağıdakileri uygulayın: 
 	1. fifaData dizisini(array) fonksiyonun birinci parametresi olarak alacak
@@ -52,14 +46,15 @@ if(winner>fifa2014[0]['Away Team Goals']){
 	3. Finaller data setindeki tüm yılları içeren "years" adındaki diziyi(array) döndürecek
 	*/
 
-function Yillar(dizi , cb_Finaller) {
-	let yil= [];
-	yil = cb_Finaller(dizi).map((yil)=>{return yil["Year"]});
-	return yil;
+function Yillar(dizi, cb_Finaller) {
+  let yil = [];
+  yil = cb_Finaller(dizi).map((yil) => {
+    return yil["Year"];
+  });
+  return yil;
 }
 
-// console.log(Yillar(fifaData,Finaller))
-
+// console.log(Yillar(fifaData, Finaller));
 
 /*  Görev 4: 
 	Bir higher-order fonksiyonunu olan Kazananlar isimli fonksiyona aşağıdakileri uygulayın:  
@@ -67,19 +62,17 @@ function Yillar(dizi , cb_Finaller) {
 	2. Görev 2'de yazdığınız Finaller fonksiyonunu, geriçağırım(callback) olarak fonksiyonun ikinci parametresi olarak alacak
 	3. Her final maçının kazananını (evsahibi ya da deplasman) belirleyecek
 	💡 İPUCU: Beraberlikler(ties) için şimdilik endişelenmeyin (Detaylı bilgi için README dosyasına bakabilirsiniz.)
-	4. Tüm kazanan ülkelerin isimlerini içeren `kazananlar` adında bir dizi(array) döndürecek(return)  */ 
+	4. Tüm kazanan ülkelerin isimlerini içeren `kazananlar` adında bir dizi(array) döndürecek(return)  */
 
-function Kazananlar(dizi , cb_Finaller) {
-	let kazananlar = cb_Finaller(dizi).map(yil => {
-		if(yil['Home Team Goals'] > yil['Away Team Goals'])
-			return yil['Home Team Name'];
-		else
-			return yil['Away Team Name'];
-	});
-	return kazananlar;
+function Kazananlar(dizi, cb_Finaller) {
+  let kazananlar = cb_Finaller(dizi).map((yil) => {
+    if (yil["Home Team Goals"] > yil["Away Team Goals"])
+      return yil["Home Team Name"];
+    else return yil["Away Team Name"];
+  });
+  return kazananlar;
 }
-
-
+//console.log(Kazananlar(fifaData, Finaller));
 
 /*  Görev 5: 
 	Bir higher-order fonksiyonu olan YillaraGoreKazananlar isimli fonksiyona aşağıdakileri uygulayın:
@@ -92,14 +85,15 @@ function Kazananlar(dizi , cb_Finaller) {
 	💡 İPUCU: her cümlenin adım 4'te belirtilen cümleyle birebir aynı olması gerekmektedir.
 */
 
-function YillaraGoreKazananlar(dizi , cb_Finaller , cb_Yillar , cb_Kazananlar) {
-	let cumle = cb_Kazananlar(dizi , cb_Finaller).map((kazanan ,index )=>{
-		return `${cb_Yillar(dizi, cb_Finaller)[index]} yılında, ${kazanan} dünya kupasını kazandı!`
-	})
-	return cumle;
-
+function YillaraGoreKazananlar(dizi, cb_Finaller, cb_Yillar, cb_Kazananlar) {
+  let cumle = cb_Kazananlar(dizi, cb_Finaller).map((kazanan, index) => {
+    return `${
+      cb_Yillar(dizi, cb_Finaller)[index]
+    } yılında, ${kazanan} dünya kupasını kazandı!`;
+  });
+  return cumle;
 }
-console.log(YillaraGoreKazananlar(fifaData, Finaller, Yillar, Kazananlar));
+// console.log(YillaraGoreKazananlar(fifaData, Finaller, Yillar, Kazananlar));
 
 /*  Görev 6: 
 	Bir higher order fonksiyonu olan `OrtalamaGolSayisi` isimli fonksiyona aşağıdakileri uygulayın: 
@@ -116,19 +110,14 @@ console.log(YillaraGoreKazananlar(fifaData, Finaller, Yillar, Kazananlar));
 */
 
 function OrtalamaGolSayisi(cb_Finaller) {
-	
-    let toplamGol = cb_Finaller.reduce((toplam, mac) => {
-		toplam += (mac["Home Team Goals"] + mac["Away Team Goals"]);
-		return toplam;
-	}, 0);
-	console.log(toplamGol);
-	return (toplamGol/cb_Finaller.length).toFixed(2);
+  let toplamGol = cb_Finaller.reduce((toplam, mac) => {
+    toplam += mac["Home Team Goals"] + mac["Away Team Goals"];
+    return toplam;
+  }, 0);
+  // console.log(toplamGol);
+  return (toplamGol / cb_Finaller.length).toFixed(2);
 }
-console.log(OrtalamaGolSayisi(Finaller(fifaData)));
-	
-
-
-
+// console.log(OrtalamaGolSayisi(Finaller(fifaData)));
 
 /// EKSTRA ÇALIŞMALAR ///
 
@@ -139,76 +128,113 @@ console.log(OrtalamaGolSayisi(Finaller(fifaData)));
 İpucu: `.reduce` Kullanın*/
 
 function UlkelerinKazanmaSayilari(data) {
-	
-    let finaller = data.filter(mac => mac.Stage =="Final")
+  let finaller = data.filter((mac) => mac.Stage == "Final");
+  let kisaltma = finaller.reduce((acc, item) => {
+    let homeTeam = item["Home Team Initials"];
+    let homeTeamGoals = item["Home Team Goals"];
+    let awayTeamGoals = item["Away Team Goals"];
+    if (homeTeamGoals > awayTeamGoals) {
+      if (acc[homeTeam] == undefined) {
+        acc[homeTeam] = 1;
+      } else {
+        acc[homeTeam]++;
+      }
+    } else {
+      let awayTeam = item["Away Team Initials"];
 
-	let result = {};
-	result.reduce()
-	
+      if (acc[awayTeam] == undefined) {
+        acc[awayTeam] = 1;
+      } else {
+        acc[awayTeam]++;
+      }
+    }
+    return acc;
+  }, {});
+
+  console.log(kisaltma);
 }
-
-
+UlkelerinKazanmaSayilari(fifaData);
 
 /*  BONUS 2:  
 EnCokGolAtan() isminde bir fonksiyon yazın, `data` yı parametre olarak alsın ve Dünya kupası finallerinde en çok gol atan takımı döndürsün */
 
 function EnCokGolAtan(data) {
-	let finaller = data.filter(mac => mac.Stage == "Final") 
-	let goals = finaller.reduce((acc, item) => {
-		let homeTeam = item["Home Team Initials"]
-		if (acc[homeTeam] == undefined) {
-			acc[homeTeam] = item["Home Team Goals"]
-		} else {
-			acc[homeTeam] += item["Home Team Goals"]
-		}
-		let awayTeam = item["Away Team Initials"]
-		if (acc[awayTeam] == undefined) {
-			acc[awayTeam] = item["Away Team Goals"]
-		} else {
-			acc[awayTeam] += item["Away Team Goals"]
-		}
-		return acc ;
+  let finaller = data.filter((mac) => mac.Stage == "Final");
+  let goals = finaller.reduce((acc, item) => {
+    let homeTeam = item["Home Team Initials"];
+    if (acc[homeTeam] == undefined) {
+      acc[homeTeam] = item["Home Team Goals"];
+    } else {
+      acc[homeTeam] += item["Home Team Goals"];
+    }
+    let awayTeam = item["Away Team Initials"];
+    if (acc[awayTeam] == undefined) {
+      acc[awayTeam] = item["Away Team Goals"];
+    } else {
+      acc[awayTeam] += item["Away Team Goals"];
+    }
+    return acc;
+  }, {});
 
-	}, {})
-	let maxGoal = 0 ;
-	let EnCokGolAtan = "";
-	for (const team in goals) {
-		if (goals[team] > maxGoal ) {
-			maxGoal = goals[team];
-			EnCokGolAtan = team;
-			
-		}
-	}
-	return EnCokGolAtan;
-	
+  let maxGoal = 0;
+  let EnCokGolAtan = "";
+  for (const team in goals) {
+    if (goals[team] > maxGoal) {
+      maxGoal = goals[team];
+      EnCokGolAtan = team;
+    }
+  }
+  return EnCokGolAtan;
 }
- console.log(EnCokGolAtan(fifaData));
-
+// console.log(EnCokGolAtan(fifaData));
 
 /*  BONUS 3: 
 EnKotuDefans() adında bir fonksiyon yazın, `data` yı parametre olarak alsın ve Dünya kupasında finallerinde en çok golü yiyen takımı döndürsün*/
 
-function EnKotuDefans(/* kodlar buraya */) {
-	
-    /* kodlar buraya */
-	
+function EnKotuDefans(data) {
+  let finaller = data.filter((mac) => mac.Stage == "Final");
+  let goals = finaller.reduce((acc, item) => {
+    let homeTeam = item["Away Team Initials"];
+    if (acc[homeTeam] == undefined) {
+      acc[homeTeam] = item["Home Team Goals"];
+    } else {
+      acc[homeTeam] += item["Home Team Goals"];
+    }
+    let awayTeam = item["Home Team Initials"];
+    if (acc[awayTeam] == undefined) {
+      acc[awayTeam] = item["Away Team Goals"];
+    } else {
+      acc[awayTeam] += item["Away Team Goals"];
+    }
+    return acc;
+  }, {});
+
+  let maxGoal = 0;
+  let EnCokGolAtan = "";
+  for (const team in goals) {
+    if (goals[team] > maxGoal) {
+      maxGoal = goals[team];
+      EnCokGolAtan = team;
+    }
+  }
+  return EnCokGolAtan;
 }
 
+// console.log(EnKotuDefans(fifaData));
 
 /* Hala vaktiniz varsa, README dosyasında listelenen hedeflerden istediğinizi aşağıdaki boşluğa yazabilirsiniz. */
 
-
 /* Bu satırın aşağısındaki kodları lütfen değiştirmeyin */
-function sa(){
-    console.log('Kodlar çalışıyor');
-    return 'as';
+function sa() {
+  console.log("Kodlar çalışıyor");
+  return "as";
 }
 sa();
 module.exports = {
-    sa,
-    Finaller,
-    Yillar,
-    Kazananlar,
-    YillaraGoreKazananlar,
-    OrtalamaGolSayisi
-}
+  sa,
+  Finaller,
+  Yillar,
+  Kazananlar,
+  YillaraGoreKazananlar,
+  OrtalamaGolSayisi,
+};
